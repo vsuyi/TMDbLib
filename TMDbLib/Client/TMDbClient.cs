@@ -214,7 +214,11 @@ namespace TMDbLib.Client
             string httpScheme = useSsl ? "https" : "http";
 
             _client = new RestClient(new Uri(string.Format("{0}://{1}/{2}/", httpScheme, baseUrl, ApiVersion)), _serializer, WebProxy);
-            _client.AddDefaultQueryString("api_key", apiKey);
+            // _client.AddDefaultQueryString("api_key", apiKey);
+
+            // set Authorization Header
+            _client.HttpClient.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
         }
 
         /// <summary>
